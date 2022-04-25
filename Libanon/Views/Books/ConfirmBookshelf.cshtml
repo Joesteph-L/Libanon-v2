@@ -1,0 +1,17 @@
+﻿@model Libanon.Models.Book
+@{
+    ViewBag.Title = "ConfirmBookshelf";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ConfirmBookshelf</h2>
+<hr />
+<br />
+<h4>Book Name: @Model.Title</h4> 
+<br />
+<h4>State:  @Model.State</h4>
+<br />
+<h5> Your book is ready for everyone </h5>
+
+@Html.ActionLink("Back to List", "Index","Books")
+
