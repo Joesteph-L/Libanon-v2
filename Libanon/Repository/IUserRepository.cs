@@ -12,8 +12,9 @@ namespace Libanon.Repository
         IEnumerable<User> GetAll();
         User Get(int Id);
         User Get(User User);
+        User Get(BorrowerTemp Borrower);
         User AddOwner(User NewOwner, Book NewBook);
-        User AddBorrower(User Borrower);
+        User AddBorrower(BorrowerTemp Borrower);
         
     }
 }

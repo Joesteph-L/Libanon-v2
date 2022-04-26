@@ -18,6 +18,7 @@ namespace Libanon.Models
         public DbSet<ISBN> ISBNs { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<BorrowerTemp> Borrowers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -14,9 +14,11 @@ namespace Libanon.Models
         public string ImageUrl { get; set; }
         public DateTime ReleaseDate { get; set; }
         public BookState State { get; set; }
+        
+        public bool ConfirmOwner { get; set; }
 
 
-
+        public virtual ICollection<BorrowerTemp> Borrowers { get; set; }
 
         public int CurrentISBNId { get; set; }
         public virtual ISBN CurrentISBN { get; set; }

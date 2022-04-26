@@ -67,8 +67,11 @@
         @Html.DisplayFor(modelItem => item.CurrentOwner.Name)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) @*|
-        @Html.ActionLink("Details", "Details", new { id = item.BookId }) |
+        @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
+        @if (item.State == BookState.BookShelf)
+        {
+            @Html.ActionLink("Borrow", "RequireBorrow", new { id = item.BookId })
+        }@*|
         @Html.ActionLink("Delete", "Delete", new { id = item.BookId })*@
     </td>
 </tr>

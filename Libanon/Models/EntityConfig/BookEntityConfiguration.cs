@@ -26,6 +26,11 @@ namespace Libanon.Models.EntityConfig
                 .WithMany(b => b.BorrowBooks)
                 .HasForeignKey<int>(u => (int)u.CurrentBorrowerId)
                 .WillCascadeOnDelete(false);
+
+            this.HasMany(b => b.Borrowers)
+                .WithRequired(b => b.CurrentBook)
+                .HasForeignKey<int>(b => (int)b.CurrentBookId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

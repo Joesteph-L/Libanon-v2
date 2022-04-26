@@ -14,9 +14,23 @@ namespace Libanon.Repository
             _DbContext = new ManageDbContext();
         }
 
-        public User AddBorrower(User Borrower)
+        public User AddBorrower(BorrowerTemp Borrower)
         {
-            throw new NotImplementedException();
+            if (Borrower == null)
+            {
+                throw new ArgumentNullException("NewBook");
+            }
+            User NewBorrower = new User()
+            {
+                Name = Borrower.Name,
+                Phone = Borrower.Phone,
+                Email = Borrower.Email,
+                Address = Borrower.Address,
+            };
+
+            _DbContext.Users.Add(NewBorrower);
+            _DbContext.SaveChanges();
+            return NewBorrower;
         }
 
         public User AddOwner(User NewOwner, Book NewBook)
@@ -54,12 +68,24 @@ namespace Libanon.Repository
             User TargetUser = _DbContext.Users.
                 Where<User>(u => u.Name == User.Name && u.Email == User.Email && u.Phone == User.Phone).
                 FirstOrDefault();
+
+            return TargetUser;
+        }
+
+        public User Get(BorrowerTemp User)
+        {
+            User TargetUser = _DbContext.Users.
+                Where<User>(u => u.Name == User.Name && u.Email == User.Email && u.Phone == User.Phone).
+                FirstOrDefault();
             return TargetUser;
         }
 
         public User Get(int Id)
         {
-            throw new NotImplementedException();
+            User TargetUser = _DbContext.Users.
+                Where<User>(u => u.UserId == Id).
+                FirstOrDefault();
+            return TargetUser;
         }
 
         public IEnumerable<User> GetAll()
