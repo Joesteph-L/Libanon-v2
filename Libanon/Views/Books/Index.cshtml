@@ -70,14 +70,14 @@
 
         @if (item.State == BookState.BookShelf)
         {
-            @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
+            @Html.ActionLink("Edit", "Index", "OTP", new { id = item.BookId }, null) <a>|</a>
             @Html.ActionLink("Borrow", "RequireBorrow", new { id = item.BookId })
         }
         @if (item.State == BookState.Borrowed)
         {
             @Html.ActionLink("Return", "ReturnBook", new { id = item.BookId })
 
-        }
+         }
     </td>
 </tr>
 }

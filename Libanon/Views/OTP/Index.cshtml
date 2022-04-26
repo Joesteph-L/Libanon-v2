@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string OTP = "";
+    int Id = ViewBag.IdBook;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h2>OTP</h2>
+        <hr />
+        <div class="form-group">
+            <label class="control-label col-md-2">Code: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(o => OTP, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<h2>Index</h2>
+

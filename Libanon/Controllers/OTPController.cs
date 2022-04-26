@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Libanon.Repository;
+using Libanon.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,15 @@ namespace Libanon.Controllers
 {
     public class OTPController : Controller
     {
+        readonly IBookRepository BookRepository;
+        readonly IUserRepository UserRepository;
+
+        public OTPController(IBookRepository BookRepository, IUserRepository UserRepository)
+        {
+            this.BookRepository = BookRepository;
+            this.UserRepository = UserRepository;
+        }
+
         string[] SaAllowedCharacters = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
         public string GenerateOTP(int OTPLength, string[] SaAllowedCharacters)
         {
@@ -31,12 +42,40 @@ namespace Libanon.Controllers
 
             return OTP;
         }
-        public ActionResult Index()
+        string RandomOTP;
+
+
+        public ActionResult Index(int Id)
         {
-            string RandomOTP = GenerateOTP(0, SaAllowedCharacters);
-
-
+            ViewBag.IdBook = Id;
+            CreateOTP(Id);
             return View();
         }
+        [HttpPost]
+        public ActionResult Index(string OTP, int Id)
+        {
+            if(OTP == RandomOTP)
+            {
+                return RedirectToAction("Edit","Books",Id);
+            }
+            return RedirectToAction("Index");
+        }
+        public void CreateOTP(int Id)
+        {
+            RandomOTP = GenerateOTP(7, SaAllowedCharacters);
+            SendOTP(Id, RandomOTP);
+        }
+        public void SendOTP(int Id, string OTP)
+        {
+            Book Book = BookRepository.Get(Id);
+            string title = "Mã xác nhận quyền Update sách tại Libanon";
+            string mailbody = "Xin chào " + Book.CurrentOwner.Name;
+            mailbody += "<br /><br />Mã OTP của bạn là: " + OTP;
+            mailbody += "<br /><br />Xác nhận OTP để có thể update sách tại Libanon.";
+           
+            BookRepository.SendEmail(Book.CurrentOwner.Email, title, mailbody);
+        }
     }
+
+
 }
