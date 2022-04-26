@@ -38,6 +38,22 @@ namespace Libanon.Controllers
             return View();
         }
 
+        public ActionResult Edit(int id)
+        {
+            Book Book = BookRepository.Get(id);
+
+            return View(Book);
+        }
+        [HttpPost]
+        public ActionResult Edit(Book Book)
+        {
+
+            return RedirectToAction("Check","OTP",Book);
+        }
+
+
+
+
         [HttpPost]
         public ActionResult Create(Book Book, User Owner)
         {
@@ -74,18 +90,7 @@ namespace Libanon.Controllers
             return View(Book);
         }
 
-        public ActionResult Edit(int id)
-        {
-            Book Book = BookRepository.Get(id);
-            
-            return View(Book);
-        }
-        [HttpPost]
-        public ActionResult Edit(Book Book)
-        {
-            BookRepository.Update(Book);
-            return RedirectToAction("Index");
-        }
+        
 
         public ActionResult RequireBorrow(int id)
         {
@@ -125,12 +130,12 @@ namespace Libanon.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult MailRequireBook(BorrowerTemp BorrowerTemp, Book Book)
+        public ActionResult MailRequireBook(int IdBook, int IdBorrower)
         {
 
-            //Book Book = BookRepository.Get(IdBook);
-            //BorrowerTemp BorrowerTemp = BorrowerRepository.Get(IdBorrower);
-            if(Book.ConfirmOwner == true)
+            Book Book = BookRepository.Get(IdBook);
+            BorrowerTemp BorrowerTemp = BorrowerRepository.Get(IdBorrower);
+            if (Book.ConfirmOwner == true)
             {
                 User TargetBorrower = UserRepository.Get(BorrowerTemp);
                 if(TargetBorrower == null)
@@ -154,10 +159,10 @@ namespace Libanon.Controllers
             return View("SuccessBook");
         }
 
-        public ActionResult MailAcceptBook(BorrowerTemp BorrowerTemp, Book Book)
+        public ActionResult MailAcceptBook(int IdBook, int IdBorrower)
         {
-            //Book Book = BookRepository.Get(IdBook);
-            //BorrowerTemp BorrowerTemp = BorrowerRepository.Get(IdBorrower);
+            Book Book = BookRepository.Get(IdBook);
+            BorrowerTemp BorrowerTemp = BorrowerRepository.Get(IdBorrower);
 
             if (BorrowerTemp.ConfirmBorrower == true)
             {
@@ -187,7 +192,55 @@ namespace Libanon.Controllers
             return View("SuccessBook");
         }
 
+        public ActionResult ReturnBook(int Id)
+        {
+            Book Book = BookRepository.Get(Id);
+            string title = "Yêu cầu trả sách";
+            string mailbody = "Xin chào " + Book.CurrentOwner.Name;
+            mailbody += "<br /><br />Sách của bạn sẽ được trả lại bởi: " + Book.CurrentBorrower.Name;
+            mailbody += "<br /><br />Vui lòng liên hệ số: " + Book.CurrentBorrower.Phone ;
+            mailbody += "<br /><br />Click vào link bên dưới nếu bạn đã nhận.";
+            mailbody += "<br /><a href = '" + string.Format($"{Request.Url.Scheme}://{Request.Url.Authority}/Books/MailReturn?Id={Book.BookId}&Email=Owner") + "'>Click vào đây nếu bạn đã nhận được sách.</a>";
+            BookRepository.SendEmail(Book.CurrentOwner.Email, title, mailbody);
 
+            //User Owner = UserRepository.Get(Book.CurrentOwner);
+
+            title = "Yêu cầu trả sách";
+            mailbody = "Xin chào " + Book.CurrentBorrower.Name;
+            mailbody += "<br /><br />Bạn  đã yêu cầu trả quyển sách: " + Book.Title;
+            mailbody += "<br /><br />Dưới đây là thông tin người sở hưu sách.";
+            mailbody += "<br /><br />Tên: " + Book.CurrentOwner.Name + "<br /><br />Sđt: " + Book.CurrentOwner.Phone + "<br /><br />Email: " + Book.CurrentOwner.Email;
+            mailbody += "<br /><a href = '" + string.Format($"{Request.Url.Scheme}://{Request.Url.Authority}/Books/MailReturn?Id={Book.BookId}&Email=Borrower") + "'>Click vào đây nếu bạn đã trả sách.</a>";
+            BookRepository.SendEmail(Book.CurrentBorrower.Email, title, mailbody);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult MailReturn(int Id, EmailUser Email)
+        {
+            Book Book = BookRepository.Get(Id);
+            if (Email == EmailUser.Borrower)
+            {
+                Book.State = BookState.Waiting;
+                BookRepository.Update(Book);
+            }
+            else if (Email == EmailUser.Owner)
+            {
+                if (Book.State == BookState.Waiting)
+                {
+                    Book.State = BookState.BookShelf;
+                    Book.ConfirmOwner = false;
+                    Book.CurrentBorrowerId = null;
+                    BookRepository.Update(Book);
+                    return View("SuccessBook");
+                }
+                return View("VerifyEmail");
+            }
+            else
+            {
+                return View("Error");
+            }
+            return View("SuccessBook");
+        }
 
     }
 }

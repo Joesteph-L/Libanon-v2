@@ -5,6 +5,11 @@ using System.Web;
 
 namespace Libanon.Models
 {
+    public enum EmailUser
+    {
+        Owner,
+        Borrower
+    }
     public class User
     {
         public int UserId { get; set; }
