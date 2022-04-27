@@ -32,12 +32,6 @@ namespace Libanon.Controllers
             return View(ListBooks);
         }
 
-        public ActionResult Create()
-        {
-            ViewData["Owner"] = new User();
-            return View();
-        }
-
         public ActionResult Edit(int id)
         {
             Book Book = BookRepository.Get(id);
@@ -52,7 +46,11 @@ namespace Libanon.Controllers
         }
 
 
-
+        public ActionResult Create()
+        {
+            ViewData["Owner"] = new User();
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Create(Book Book, User Owner)

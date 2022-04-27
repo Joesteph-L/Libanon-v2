@@ -20,12 +20,9 @@ namespace Libanon.Repository
                 throw new ArgumentNullException("NewBook");
             }
 
-            _DbContext.Borrowers.Add(BorrowerTemp);
+            BorrowerTemp = _DbContext.Borrowers.Add(BorrowerTemp);
             _DbContext.SaveChanges();
 
-            Borrower TargetBorrower = _DbContext.Borrowers.
-               Where<Borrower>(u => u.Name == BorrowerTemp.Name && u.Email == BorrowerTemp.Email && u.Phone == BorrowerTemp.Phone).
-               FirstOrDefault();
 
             return BorrowerTemp;
         }

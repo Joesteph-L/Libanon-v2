@@ -16,10 +16,10 @@ namespace Libanon.Repository
 
         public User AddBorrower(Borrower Borrower)
         {
-            if (Borrower == null)
-            {
-                throw new ArgumentNullException("NewBook");
-            }
+            //if (Borrower == null)
+            //{
+            //    throw new ArgumentNullException("NewBook");
+            //}
             User NewBorrower = new User()
             {
                 Name = Borrower.Name,
@@ -28,7 +28,7 @@ namespace Libanon.Repository
                 Address = Borrower.Address,
             };
 
-            _DbContext.Users.Add(NewBorrower);
+            NewBorrower = _DbContext.Users.Add(NewBorrower);
             _DbContext.SaveChanges();
             return NewBorrower;
         }
@@ -58,7 +58,7 @@ namespace Libanon.Repository
                         }
                     }
             };
-            _DbContext.Users.Add(NewUser);
+            NewOwner = _DbContext.Users.Add(NewUser);
             _DbContext.SaveChanges();
             return NewOwner;
         }
