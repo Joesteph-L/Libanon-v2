@@ -48,22 +48,24 @@ namespace Libanon.Controllers
         public ActionResult Index(int Id)
         {
             ViewBag.IdBook = Id;
-            CreateOTP(Id);
+            TempData["OTP"] = CreateOTP(Id);
             return View();
         }
         [HttpPost]
         public ActionResult Index(string OTP, int Id)
         {
+            string RandomOTP = TempData["OTP"].ToString();
             if(OTP == RandomOTP)
             {
-                return RedirectToAction("Edit","Books",Id);
+                return RedirectToAction("Edit/"+Id,"Books");
             }
             return RedirectToAction("Index");
         }
-        public void CreateOTP(int Id)
+        public string CreateOTP(int Id)
         {
             RandomOTP = GenerateOTP(7, SaAllowedCharacters);
             SendOTP(Id, RandomOTP);
+            return RandomOTP;
         }
         public void SendOTP(int Id, string OTP)
         {

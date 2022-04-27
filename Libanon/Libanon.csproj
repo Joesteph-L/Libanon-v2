@@ -215,6 +215,7 @@
     <Compile Include="Repository\BorrowerRepository.cs" />
     <Compile Include="Repository\IBookRepository.cs" />
     <Compile Include="Repository\IBorrowerRepository.cs" />
+    <Compile Include="Repository\IOTPRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
