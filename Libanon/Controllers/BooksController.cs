@@ -154,8 +154,8 @@ namespace Libanon.Controllers
                 BorrowerRepository.Update(BorrowerTemp);
             }
 
+            ViewData["Content"] = "Bạn đã xác nhận yêu cầu mượn sách.";
 
-            
             return View("SuccessBook");
         }
 
@@ -182,7 +182,7 @@ namespace Libanon.Controllers
                 Book.ConfirmOwner = true;
                 BookRepository.Update(Book);
             }
-
+            ViewData["Content"] = "Bạn đã hoàn thành cho mượn sách.";
             return View("SuccessBook");
         }
 
@@ -231,6 +231,7 @@ namespace Libanon.Controllers
                     Book.ConfirmOwner = false;
                     Book.CurrentBorrowerId = null;
                     BookRepository.Update(Book);
+                    ViewData["Content"] = "Bạn đã nhận sách thành công.";
                     return View("SuccessBook");
                 }
                 return View("VerifyEmail");
@@ -239,6 +240,7 @@ namespace Libanon.Controllers
             {
                 return View("Error");
             }
+            ViewData["Content"] = "Bạn đã trả sách.";
             return View("SuccessBook");
         }
 

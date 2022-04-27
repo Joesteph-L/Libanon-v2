@@ -4,5 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>SuccessBook</h2>
+@{ 
+    string Body = ViewData["Content"] as string
+}
+<h2>Verify Book</h2>
+<h4>
+    @Body
+</h4>
 
