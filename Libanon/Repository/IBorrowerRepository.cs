@@ -9,9 +9,9 @@ namespace Libanon.Repository
 {
     public interface IBorrowerRepository
     {
-        BorrowerTemp Get(int Id);
-        BorrowerTemp Add(BorrowerTemp BorrowerTemp);
-        bool Update(BorrowerTemp BorrowerTemp);
+        Borrower Get(int Id);
+        Borrower Add(Borrower BorrowerTemp);
+        bool Update(Borrower BorrowerTemp);
         bool Delete(int Id);
 
     }

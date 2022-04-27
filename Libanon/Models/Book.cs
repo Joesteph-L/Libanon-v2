@@ -18,7 +18,7 @@ namespace Libanon.Models
         public bool ConfirmOwner { get; set; }
 
 
-        public virtual ICollection<BorrowerTemp> Borrowers { get; set; }
+        public virtual ICollection<Borrower> Borrowers { get; set; }
 
         public int CurrentISBNId { get; set; }
         public virtual ISBN CurrentISBN { get; set; }

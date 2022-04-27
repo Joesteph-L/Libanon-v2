@@ -99,23 +99,23 @@ namespace Libanon.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewData["Borrower"] = new BorrowerTemp();
+            ViewData["Borrower"] = new Borrower();
             return View(Book);
         }
         [HttpPost]
-        public ActionResult RequireBorrow(Book Book, BorrowerTemp Borrower)
+        public ActionResult RequireBorrow(Book Book, Borrower Borrower)
         {
 
             Borrower.CurrentBookId = Book.BookId;
 
             
-            BorrowerTemp TargetBorrower = BorrowerRepository.Add(Borrower);
+            Borrower TargetBorrower = BorrowerRepository.Add(Borrower);
 
             string title = "Bạn đã mượn sách";
             string mailbody = "Xin chào " + Borrower.Name;
             mailbody += "<br /><br />Bạn đã mượn một quyển sách tên: " + Book.Title;
             mailbody += "<br /><br />Click vào link bên dưới nếu bạn thật sự muốn mượn.";
-            mailbody += "<br /><a href = '" + string.Format($"{Request.Url.Scheme}://{Request.Url.Authority}/Books/MailRequireBook?IdBorrower={TargetBorrower.BorrowerTempId}&IdBook={Book.BookId}") + "'>Click vào đây nếu bạn đã sẵn sàng.</a>";
+            mailbody += "<br /><a href = '" + string.Format($"{Request.Url.Scheme}://{Request.Url.Authority}/Books/MailRequireBook?IdBorrower={TargetBorrower.BorrowerId}&IdBook={Book.BookId}") + "'>Click vào đây nếu bạn đã sẵn sàng.</a>";
             BookRepository.SendEmail(Borrower.Email, title, mailbody);
 
             User Owner = UserRepository.Get(Book.CurrentOwner);
@@ -124,7 +124,7 @@ namespace Libanon.Controllers
             mailbody = "Xin chào " + Owner.Name;
             mailbody += "<br /><br />Bạn có yêu mượn một quyển sách tên: " + Book.Title;
             mailbody += "<br /><br />Click vào link bên dưới nếu bạn thật sự muốn cho mượn.";
-            mailbody += "<br /><a href = '" + string.Format($"{Request.Url.Scheme}://{Request.Url.Authority}/Books/MailAcceptBook?IdBorrower={TargetBorrower.BorrowerTempId}&IdBook={Book.BookId}") + "'>Click vào đây nếu bạn đã sẵn sàng.</a>";
+            mailbody += "<br /><a href = '" + string.Format($"{Request.Url.Scheme}://{Request.Url.Authority}/Books/MailAcceptBook?IdBorrower={TargetBorrower.BorrowerId}&IdBook={Book.BookId}") + "'>Click vào đây nếu bạn đã sẵn sàng.</a>";
             BookRepository.SendEmail(Owner.Email, title, mailbody);
 
             return RedirectToAction("Index");
@@ -134,7 +134,7 @@ namespace Libanon.Controllers
         {
 
             Book Book = BookRepository.Get(IdBook);
-            BorrowerTemp BorrowerTemp = BorrowerRepository.Get(IdBorrower);
+            Borrower BorrowerTemp = BorrowerRepository.Get(IdBorrower);
             if (Book.ConfirmOwner == true)
             {
                 User TargetBorrower = UserRepository.Get(BorrowerTemp);
@@ -162,7 +162,7 @@ namespace Libanon.Controllers
         public ActionResult MailAcceptBook(int IdBook, int IdBorrower)
         {
             Book Book = BookRepository.Get(IdBook);
-            BorrowerTemp BorrowerTemp = BorrowerRepository.Get(IdBorrower);
+            Borrower BorrowerTemp = BorrowerRepository.Get(IdBorrower);
 
             if (BorrowerTemp.ConfirmBorrower == true)
             {

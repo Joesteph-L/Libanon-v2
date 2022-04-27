@@ -14,7 +14,7 @@ namespace Libanon.Repository
             _DbContext = new ManageDbContext();
         }
 
-        public User AddBorrower(BorrowerTemp Borrower)
+        public User AddBorrower(Borrower Borrower)
         {
             if (Borrower == null)
             {
@@ -72,10 +72,10 @@ namespace Libanon.Repository
             return TargetUser;
         }
 
-        public User Get(BorrowerTemp User)
+        public User Get(Borrower BorrowerTemp)
         {
             User TargetUser = _DbContext.Users.
-                Where<User>(u => u.Name == User.Name && u.Email == User.Email && u.Phone == User.Phone).
+                Where<User>(u => u.Name == BorrowerTemp.Name && u.Email == BorrowerTemp.Email && u.Phone == BorrowerTemp.Phone).
                 FirstOrDefault();
             return TargetUser;
         }

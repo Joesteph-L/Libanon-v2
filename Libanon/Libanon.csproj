@@ -187,22 +187,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202204220456580_Libanon-V1.cs" />
-    <Compile Include="Migrations\202204220456580_Libanon-V1.designer.cs">
-      <DependentUpon>202204220456580_Libanon-V1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202204220803237_Libanon-V2.cs" />
-    <Compile Include="Migrations\202204220803237_Libanon-V2.designer.cs">
-      <DependentUpon>202204220803237_Libanon-V2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202204260231048_Libanon-V3.cs" />
-    <Compile Include="Migrations\202204260231048_Libanon-V3.designer.cs">
-      <DependentUpon>202204260231048_Libanon-V3.cs</DependentUpon>
+    <Compile Include="Migrations\202204270312098_Libanon-V1.cs" />
+    <Compile Include="Migrations\202204270312098_Libanon-V1.designer.cs">
+      <DependentUpon>202204270312098_Libanon-V1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
-    <Compile Include="Models\BorrowerTemp.cs" />
+    <Compile Include="Models\Borrower.cs" />
     <Compile Include="Models\EntityConfig\BookEntityConfiguration.cs" />
+    <Compile Include="Models\EntityConfig\BorrowerEntityConfiguration.cs" />
     <Compile Include="Models\EntityConfig\ISBNEntityConfiguration.cs" />
     <Compile Include="Models\EntityConfig\RateEntityConfiguration.cs" />
     <Compile Include="Models\EntityConfig\UserEntityConfiguration.cs" />
@@ -313,14 +306,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202204220456580_Libanon-V1.resx">
-      <DependentUpon>202204220456580_Libanon-V1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202204220803237_Libanon-V2.resx">
-      <DependentUpon>202204220803237_Libanon-V2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202204260231048_Libanon-V3.resx">
-      <DependentUpon>202204260231048_Libanon-V3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202204270312098_Libanon-V1.resx">
+      <DependentUpon>202204270312098_Libanon-V1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

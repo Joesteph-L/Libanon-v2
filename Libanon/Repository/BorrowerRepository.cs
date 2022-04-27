@@ -13,7 +13,7 @@ namespace Libanon.Repository
         {
             _DbContext = new ManageDbContext();
         }
-        public BorrowerTemp Add(BorrowerTemp BorrowerTemp)
+        public Borrower Add(Borrower BorrowerTemp)
         {
             if (BorrowerTemp == null)
             {
@@ -23,8 +23,8 @@ namespace Libanon.Repository
             _DbContext.Borrowers.Add(BorrowerTemp);
             _DbContext.SaveChanges();
 
-            BorrowerTemp TargetBorrower = _DbContext.Borrowers.
-               Where<BorrowerTemp>(u => u.Name == BorrowerTemp.Name && u.Email == BorrowerTemp.Email && u.Phone == BorrowerTemp.Phone).
+            Borrower TargetBorrower = _DbContext.Borrowers.
+               Where<Borrower>(u => u.Name == BorrowerTemp.Name && u.Email == BorrowerTemp.Email && u.Phone == BorrowerTemp.Phone).
                FirstOrDefault();
 
             return BorrowerTemp;
@@ -32,29 +32,29 @@ namespace Libanon.Repository
 
         public bool Delete(int Id)
         {
-            BorrowerTemp BorrowerTemp = _DbContext.Borrowers.Where<BorrowerTemp>(b => b.BorrowerTempId == Id).
+            Borrower BorrowerTemp = _DbContext.Borrowers.Where<Borrower>(b => b.BorrowerId == Id).
                 FirstOrDefault();
             _DbContext.Borrowers.Remove(BorrowerTemp);
             _DbContext.SaveChanges();
             return true;
         }
 
-        public BorrowerTemp Get(int Id)
+        public Borrower Get(int Id)
         {
-            BorrowerTemp BorrowerTemp = _DbContext.Borrowers.Where<BorrowerTemp>(b => b.BorrowerTempId == Id).
+            Borrower BorrowerTemp = _DbContext.Borrowers.Where<Borrower>(b => b.BorrowerId == Id).
                 FirstOrDefault(); ;
 
             return BorrowerTemp;
         }
 
-        public bool Update(BorrowerTemp BorrowerTemp)
+        public bool Update(Borrower BorrowerTemp)
         {
            
                 if (BorrowerTemp == null)
                 {
                     throw new ArgumentNullException("Book");
                 }
-                var NewBorrowerTemp = _DbContext.Borrowers.Where<BorrowerTemp>(s => s.BorrowerTempId == BorrowerTemp.BorrowerTempId).FirstOrDefault();
+                var NewBorrowerTemp = _DbContext.Borrowers.Where<Borrower>(s => s.BorrowerId == BorrowerTemp.BorrowerId).FirstOrDefault();
 
                 NewBorrowerTemp.Name = BorrowerTemp.Name;
                 NewBorrowerTemp.Phone = BorrowerTemp.Phone;

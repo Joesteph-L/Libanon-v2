@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Libanon.Models
 {
-    public class BorrowerTemp
+    public class Borrower
     {
-        public int BorrowerTempId { get; set; }
+        public int BorrowerId { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
